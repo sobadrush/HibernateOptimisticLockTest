@@ -31,16 +31,10 @@ public class TestEmpDAO {
 //	@Ignore
 	@Rollback(true)
 	public void test001() throws SQLException {
-		List<EmpVO> empList;
-		try {
-			empList = empDAO.getAll();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		List<EmpVO> empList = empDAO.getAll();
+		for (EmpVO empVO : empList) {
+			System.out.println(empVO);
 		}
-//		for (EmpVO empVO : empList) {
-//			System.out.println(empVO);
-//		}
 	}
 
 }

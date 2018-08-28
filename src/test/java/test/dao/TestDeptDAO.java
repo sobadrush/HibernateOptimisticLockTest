@@ -31,26 +31,10 @@ public class TestDeptDAO {
 //	@Ignore
 	@Rollback(true)
 	public void test001() throws SQLException {
-		try {
-			List<DeptVO> deptList = deptDAO.getAll();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		List<DeptVO> deptList = deptDAO.getAll();
+		for (DeptVO dVO : deptList) {
+			System.out.println(dVO);
 		}
-//		for (DeptVO dVO : deptList) {
-//			System.out.println(dVO);
-//		}
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-

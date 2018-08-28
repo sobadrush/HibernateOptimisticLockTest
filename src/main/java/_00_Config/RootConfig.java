@@ -18,6 +18,8 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.sqlite.SQLiteConfig;
+import org.sqlite.SQLiteConfig.Pragma;
 
 @Configuration
 @ComponentScan(basePackages = "com.ctbc.model.dao.**")
@@ -42,7 +44,18 @@ public class RootConfig {
 
 	@Bean
 	public DataSource driverManagerDs() {
+		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+		// 若無此設置，SQLite查日期會報錯
+		// 參考：https://github.com/xerial/sqlite-jdbc/issues/88
+		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+		SQLiteConfig sqLiteConfig = new SQLiteConfig();
+		Properties props = sqLiteConfig.toProperties();
+		props.setProperty(Pragma.DATE_STRING_FORMAT.pragmaName, "yyyy-MM-dd");
+		
+		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+		
 		DriverManagerDataSource ds = new DriverManagerDataSource();
+		ds.setConnectionProperties(props);
 		ds.setUrl("jdbc:sqlite:testDB.db");
 		ds.setDriverClassName("org.sqlite.JDBC");
 		return ds;
@@ -54,6 +67,7 @@ public class RootConfig {
 		sessionFactory.setDataSource(ds);
 		sessionFactory.setPackagesToScan(new String[] { "com.ctbc.model.vo" });
 		sessionFactory.setHibernateProperties(this.hibernateProperties());
+//		sessionFactory.setEntityInterceptor(new MyInterceptor());
 		return sessionFactory;
 	}
 

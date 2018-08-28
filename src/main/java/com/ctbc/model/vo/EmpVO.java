@@ -29,7 +29,7 @@ public class EmpVO implements Serializable {
 	private String empJob;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "hiredate")
+	@Column(name = "hiredate" , columnDefinition = "DATE")
 	private java.util.Date empHiredate;
 	
 	@Column(name = "deptno")
