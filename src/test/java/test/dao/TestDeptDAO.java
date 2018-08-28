@@ -2,6 +2,7 @@ package test.dao;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ctbc.model.dao.DeptDAO;
 import com.ctbc.model.vo.DeptVO;
+import com.ctbc.model.vo.EmpVO;
 
 import _00_Config.RootConfig;
 
@@ -33,7 +35,12 @@ public class TestDeptDAO {
 	public void test001() throws SQLException {
 		List<DeptVO> deptList = deptDAO.getAll();
 		for (DeptVO dVO : deptList) {
-			System.out.println(dVO);
+			System.out.println(" @@@ " + dVO);
+			
+			Set<EmpVO> empList = dVO.getEmps();
+			for (EmpVO empVO : empList) {
+				System.out.println(" >>> " + empVO);
+			}
 		}
 	}
 

@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,9 +35,10 @@ public class EmpVO implements Serializable {
 	@Column(name = "hiredate" , columnDefinition = "DATE")
 	private java.util.Date empHiredate;
 	
-	@Column(name = "deptno")
-	private Integer deptId;
-
+	@JoinColumn(name = "deptno")
+	@ManyToOne(fetch = FetchType.EAGER)
+	private DeptVO deptVOGG;
+	
 	public EmpVO() {
 		super();
 	}
@@ -71,12 +75,12 @@ public class EmpVO implements Serializable {
 		this.empHiredate = empHiredate;
 	}
 
-	public Integer getDeptId() {
-		return deptId;
+	public DeptVO getDeptVOGG() {
+		return deptVOGG;
 	}
 
-	public void setDeptId(Integer deptId) {
-		this.deptId = deptId;
+	public void setDeptVOGG(DeptVO deptVOGG) {
+		this.deptVOGG = deptVOGG;
 	}
 
 	@Override

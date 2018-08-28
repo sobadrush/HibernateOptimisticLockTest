@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ctbc.model.dao.EmpDAO;
+import com.ctbc.model.vo.DeptVO;
 import com.ctbc.model.vo.EmpVO;
 
 import _00_Config.RootConfig;
@@ -34,6 +35,10 @@ public class TestEmpDAO {
 		List<EmpVO> empList = empDAO.getAll();
 		for (EmpVO empVO : empList) {
 			System.out.println(empVO);
+			
+			DeptVO deptVO = empVO.getDeptVOGG();
+			System.out.println(" >>> " + deptVO);
+			
 		}
 	}
 
