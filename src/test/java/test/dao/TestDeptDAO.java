@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -30,7 +31,7 @@ public class TestDeptDAO {
 	public DeptDAO deptDAO;
 
 	@Test
-//	@Ignore
+	@Ignore
 	@Rollback(true)
 	public void test001() throws SQLException {
 		List<DeptVO> deptList = deptDAO.getAll();
@@ -43,5 +44,43 @@ public class TestDeptDAO {
 			}
 		}
 	}
+	
+	@Test
+//	@Ignore
+	@Rollback(true)
+	public void test002() throws SQLException {
+		DeptVO deptVO = new DeptVO();
+		deptVO.setDeptId(10);
+		deptVO.setDeptName("國防部");
+		deptVO.setDeptLoc("中正區");
+		deptDAO.update(deptVO);
+		//----------------------
+		this.printAllData();
+	}
 
+	private void printAllData(){
+		System.out.println("=============== printAllData() ================");
+		List<DeptVO> deptList = deptDAO.getAll();
+		for (DeptVO dVO : deptList) {
+			System.out.println(dVO);
+		}
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 
 @Entity(name = "DeptVO")
@@ -31,6 +32,10 @@ public class DeptVO implements Serializable {
 	@Column(name = "loc")
 	private String deptLoc;
 
+	@Version
+	@Column(name="version")
+	private Integer version;
+	
 	@OneToMany(fetch = FetchType.LAZY , mappedBy = "deptVOGG" , cascade = CascadeType.ALL)  
 	private Set<EmpVO> emps;
 	
@@ -70,9 +75,17 @@ public class DeptVO implements Serializable {
 		this.emps = emps;
 	}
 
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
 	@Override
 	public String toString() {
-		return "DeptVO [deptId=" + deptId + ", deptName=" + deptName + ", deptLoc=" + deptLoc + "]";
+		return "DeptVO [deptId=" + deptId + ", deptName=" + deptName + ", deptLoc=" + deptLoc + ", version=" + version + "]";
 	}
 
 }

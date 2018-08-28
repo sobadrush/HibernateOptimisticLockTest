@@ -21,6 +21,16 @@ public class DeptDAO {
 		return deptList;
 	}
 	
+	public void update(DeptVO deptVO){
+		Session currentSession = sessionFactory.getCurrentSession();
+//		currentSession.saveOrUpdate(deptVO);
+		
+		DeptVO persistDeptVO = currentSession.get(DeptVO.class, deptVO.getDeptId());
+		persistDeptVO.setDeptName(deptVO.getDeptName());
+		persistDeptVO.setDeptLoc(deptVO.getDeptLoc());
+		
+	}
+	
 }
 
 

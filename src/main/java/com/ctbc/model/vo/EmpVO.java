@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 @Entity(name = "EmpVOFuck")
 @Table(name = "z40180_empTB")
@@ -38,6 +39,10 @@ public class EmpVO implements Serializable {
 	@JoinColumn(name = "deptno")
 	@ManyToOne(fetch = FetchType.EAGER)
 	private DeptVO deptVOGG;
+	
+	@Version
+	@Column(name="version")
+	private Integer version;
 	
 	public EmpVO() {
 		super();
@@ -83,9 +88,17 @@ public class EmpVO implements Serializable {
 		this.deptVOGG = deptVOGG;
 	}
 
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
 	@Override
 	public String toString() {
-		return "EmpVO [empId=" + empId + ", empName=" + empName + ", empJob=" + empJob + ", empHiredate=" + empHiredate + "]";
+		return "EmpVO [empId=" + empId + ", empName=" + empName + ", empJob=" + empJob + ", empHiredate=" + empHiredate + ", version=" + version + "]";
 	}
-	
+
 }
