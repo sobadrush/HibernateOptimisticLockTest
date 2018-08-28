@@ -32,9 +32,10 @@ public class RootConfig {
 		return new Properties() {
 			private static final long serialVersionUID = 1L;
 			{
-//				setProperty("hibernate.hbm2ddl.auto", "update");
+				setProperty("hibernate.hbm2ddl.auto", "none");
 				setProperty("hibernate.show_sql", "true");
 				setProperty("hibernate.format_sql", "true");
+				setProperty("hibernate.current_session_context_class", "thread");
 				setProperty("hibernate.dialect", "org.hibernate.dialect.SQLiteDialect");
 				// setProperty("hibernate.globally_quoted_identifiers", "true");
 			}
@@ -66,7 +67,6 @@ public class RootConfig {
 		sessionFactory.setDataSource(ds);
 		sessionFactory.setPackagesToScan(new String[] { "com.ctbc.model.vo" });
 		sessionFactory.setHibernateProperties(this.hibernateProperties());
-//		sessionFactory.setEntityInterceptor(new MyInterceptor());
 		return sessionFactory;
 	}
 
