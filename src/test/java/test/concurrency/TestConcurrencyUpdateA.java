@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -21,6 +22,8 @@ import _00_Config.RootConfig;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { RootConfig.class })
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
+//@ActiveProfiles(profiles = {"sqlite"})
+@ActiveProfiles(profiles = {"mssql_itoa"})
 //@Transactional
 public class TestConcurrencyUpdateA {
 
@@ -31,7 +34,7 @@ public class TestConcurrencyUpdateA {
 	public DeptDAO deptDAO;
 	
 	@Test
-	@Ignore
+//	@Ignore
 //	@Rollback(true)
 	public void test001(){
 		try {
@@ -82,23 +85,18 @@ public class TestConcurrencyUpdateA {
 	}
 	
 	@Test
-//	@Ignore
+	@Ignore
 //	@Rollback(true)
-	public void test00ˇ(){
+	public void test003(){
 		try {
-			System.out.println("============= test002 =============");
+			System.out.println("============= test003 =============");
 			DeptVO deptVO_A = new DeptVO();
 			deptVO_A.setDeptId(10);
-			deptVO_A.setDeptName("國防部");
-			deptVO_A.setDeptLoc("中正區");
+			deptVO_A.setDeptName("國防部B");
+			deptVO_A.setDeptLoc("中正區B");
 			
-			DeptVO deptVO_B = new DeptVO();
-			deptVO_B.setDeptId(10);
-			deptVO_B.setDeptName("交通部");
-			deptVO_B.setDeptLoc("永和區");
-			
-//			Session currenctSession = sessionFactory.getCurrentSession();
-			Session sessionA = sessionFactory.openSession();
+			Session sessionA = sessionFactory.getCurrentSession();
+//			Session sessionA = sessionFactory.openSession();
 			
 			Transaction txA = sessionA.beginTransaction();
 			
@@ -110,17 +108,7 @@ public class TestConcurrencyUpdateA {
 			
 			//------------------------------------------------------------
 			
-			Session sessionB = sessionFactory.openSession();
-			
-			Transaction txB = sessionA.beginTransaction();
-			
-			DeptVO persistDeptVO_B = sessionB.get(DeptVO.class, deptVO_B.getDeptId());
-			persistDeptVO_B.setDeptName(deptVO_B.getDeptName());
-			persistDeptVO_B.setDeptLoc(deptVO_B.getDeptLoc());
-			
-			txB.commit();
-			
-		} catch (HibernateException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

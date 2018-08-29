@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,28 +26,30 @@ import _00_Config.RootConfig;
 @ContextConfiguration(classes = { RootConfig.class })
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 @Transactional
+@ActiveProfiles(profiles = { "sqlite" })
+//@ActiveProfiles(profiles = { "mssql_itoa" })
 public class TestDeptDAO {
 
 	@Autowired
 	public DeptDAO deptDAO;
 
 	@Test
-	@Ignore
+//	@Ignore
 	@Rollback(true)
 	public void test001() throws SQLException {
 		List<DeptVO> deptList = deptDAO.getAll();
 		for (DeptVO dVO : deptList) {
 			System.out.println(" @@@ " + dVO);
-			
+
 			Set<EmpVO> empList = dVO.getEmps();
 			for (EmpVO empVO : empList) {
 				System.out.println(" >>> " + empVO);
 			}
 		}
 	}
-	
+
 	@Test
-//	@Ignore
+	@Ignore
 	@Rollback(true)
 	public void test002() throws SQLException {
 		DeptVO deptVO = new DeptVO();
@@ -58,29 +61,12 @@ public class TestDeptDAO {
 		this.printAllData();
 	}
 
-	private void printAllData(){
+	private void printAllData() {
 		System.out.println("=============== printAllData() ================");
 		List<DeptVO> deptList = deptDAO.getAll();
 		for (DeptVO dVO : deptList) {
 			System.out.println(dVO);
 		}
 	}
-	
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -8,13 +8,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.GenericGenerator;
 
+/**
+ * native就是将主键的生成工作交由数据库完成，hibernate不管（很常用）
+ * http://www.cnblogs.com/ph123/p/5692194.html
+ */
 @Entity(name = "DeptVO")
 @Table(name = "z40180_deptTB")
 public class DeptVO implements Serializable {
@@ -22,7 +26,10 @@ public class DeptVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY) // MSSQL
+	@GeneratedValue(generator = "xxx")    
+	@GenericGenerator(name = "xxx", strategy = "native")   
 	@Column(name = "deptno")
 	private Integer deptId;
 
@@ -33,16 +40,16 @@ public class DeptVO implements Serializable {
 	private String deptLoc;
 
 	@Version
-	@Column(name="version")
+	@Column(name = "version")
 	private Integer version;
-	
-	@OneToMany(fetch = FetchType.LAZY , mappedBy = "deptVOGG" , cascade = CascadeType.ALL)  
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "deptVOGG", cascade = CascadeType.ALL)
 	private Set<EmpVO> emps;
-	
+
 	public DeptVO() {
 		super();
 	}
-	
+
 	public Integer getDeptId() {
 		return deptId;
 	}

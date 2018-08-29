@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,6 +14,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.GenericGenerator;
+
+/**
+ * native就是将主键的生成工作交由数据库完成，hibernate不管（很常用）
+ * http://www.cnblogs.com/ph123/p/5692194.html
+ */
 @Entity(name = "EmpVOFuck")
 @Table(name = "z40180_empTB")
 public class EmpVO implements Serializable {
@@ -22,7 +27,10 @@ public class EmpVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY) // MSSQL
+	@GeneratedValue(generator = "ooo")    
+	@GenericGenerator(name = "ooo", strategy = "native")   
 	@Column(name = "empno")
 	private Integer empId;
 	
