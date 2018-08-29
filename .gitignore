@@ -1,5 +1,6 @@
 ### Sqlite File
 *.db
+*.db-journal
 
 ### Java template
 *.class

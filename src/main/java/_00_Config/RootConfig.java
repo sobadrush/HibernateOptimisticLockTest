@@ -37,19 +37,19 @@ public class RootConfig {
 				
 				setProperty("hibernate.show_sql", "true");
 				setProperty("hibernate.format_sql", "true");
-				// setProperty("hibernate.current_session_context_class", "thread");
+				setProperty("hibernate.current_session_context_class", "thread");
 				// setProperty("hibernate.globally_quoted_identifiers", "true");
 				
 				switch (profileName) {
 					case "sqlite":
-						setProperty("hibernate.hbm2ddl.auto", "create"); // validate | update | create | create-drop 
-						setProperty("hibernate.dialect", "org.hibernate.dialect.SQLiteDialect");
-						setProperty("hibernate.hbm2ddl.import_files", "init_db_data/init_Sqlite_Version.sql");
+						setProperty("hibernate.hbm2ddl.auto", "none"); // validate | update | create | create-drop | none 
+						setProperty("hibernate.dialect", "org.hibernate.dialect.SQLiteDialect"); // SQL 方言
+						setProperty("hibernate.hbm2ddl.import_files", "init_db_data/init_Sqlite_Version.sql");// DB 初始資料
 						break;
 					case "mssql_itoa":
-						setProperty("hibernate.hbm2ddl.auto", "create"); // validate | update | create | create-drop
-						setProperty("hibernate.dialect", "org.hibernate.dialect.SQLServerDialect");
-						setProperty("hibernate.hbm2ddl.import_files", "init_db_data/init_MSSQL_Version.sql");
+						setProperty("hibernate.hbm2ddl.auto", "none"); // validate | update | create | create-drop | none
+						setProperty("hibernate.dialect", "org.hibernate.dialect.SQLServerDialect");// SQL 方言
+						setProperty("hibernate.hbm2ddl.import_files", "init_db_data/init_MSSQL_Version.sql");// DB 初始資料
 						break;
 				}
 				
@@ -95,7 +95,7 @@ public class RootConfig {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(ds);
 		sessionFactory.setPackagesToScan(new String[] { "com.ctbc.model.vo" });
-		sessionFactory.setHibernateProperties(this.hibernateProperties( env.getActiveProfiles()[0] ));
+		sessionFactory.setHibernateProperties(this.hibernateProperties( env.getActiveProfiles()[0] /*當前啟動的ProfileName*/ ));
 		return sessionFactory;
 	}
 
