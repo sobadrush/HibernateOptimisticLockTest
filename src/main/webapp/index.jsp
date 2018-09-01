@@ -37,6 +37,8 @@
       		  <button type="button" id="btn2" class="btn btn-success margin-around">Test Spring-MVC (ajax POST 回String)</button> <br>
       		  
       		  <button type="button" id="btn3" class="btn btn-warning margin-around">Test Spring-MVC (ajax POST 回VO)</button> <br>
+      		  
+      		  <button type="button" id="btn4" class="btn btn-info margin-around">Test Spring-MVC (ajax POST 接收VO)</button> <br>
       		
       		</div>
       		<div class="col-2"></div>
@@ -76,6 +78,25 @@
 			  $('#btn3').click(function(e){
 				  var toUrl = '<sp:url value="/TestController/testAjaxPostReturnDeptVO"/>';
 			      var postData = { 'empName' : 'Roger333' , 'empLevel333' : 'Manager333' , 'empAge333' : '26333' };								  
+			      $.ajax({ 
+			    	    url: toUrl ,
+			    	    type:"POST", 
+			    	    contentType: "application/json; charset=utf-8",
+			    	    data: toJson( postData ), // Stringified Json Object
+			    	    async: true,     // Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+			    	    cache: false,     // This will force requested pages not to be cached by the browser          
+			    	    processData:false, // To avoid making query String instead of JSON
+			    	    success: function( cbData ){
+			    	    	console.log( ' cbData >>> ' , cbData );
+			    	        alert('SUCCESS!!!');
+			    	    }
+			       });
+			  });
+			  
+			  // >>> ajax POST , 後端回在TestController中宣告的DeptVO <<<
+			  $('#btn4').click(function(e){
+				  var toUrl = '<sp:url value="/TestController/testAjaxPostReturnDeptVO"/>';
+			      var postData = { 'playerName' : 'Roger' , 'playerRole' : 'Magician' , 'playerAge' : '18' };								  
 			      $.ajax({ 
 			    	    url: toUrl ,
 			    	    type:"POST", 

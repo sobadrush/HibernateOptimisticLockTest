@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ctbc.model.vo.PlayerVO;
+
 @Controller
 @RequestMapping(value = "/TestController")
 public class TestController {
@@ -65,7 +67,7 @@ public class TestController {
 		produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }   // produces: 指定返回的内容类型，僅當 request-header 中的(Accept)類型中包含該指定類型才返回；
 	)
 	private DeptVO testAjaxPostReturnDeptVO(@RequestBody Map<String, Object> inputJson) {
-		System.out.println("=========== testAjaxPost ===========");
+		System.out.println("=========== testAjaxPostReturnDeptVO ===========");
 		System.out.println(">>> inputJson >>> " + inputJson);
 		
 		Set<Entry<String, Object>> eSet = inputJson.entrySet();
@@ -74,6 +76,20 @@ public class TestController {
 		}
 		
 		return new DeptVO(9487 , "數金部");
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/testAjaxPostReceivePlaterVO", method = RequestMethod.POST, 
+		consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE },  // consumes的例子（方法僅處理request Content-Type 為 "application/json" 類型的請求）
+		produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }   // produces: 指定返回的内容类型，僅當 request-header 中的(Accept)類型中包含該指定類型才返回；
+	)
+	private PlayerVO testAjaxPostReceivePlaterVO(@RequestBody PlayerVO playerVO) {
+		System.out.println("=========== testAjaxPostReceivePlaterVO ===========");
+		System.out.println(">>> playerVO >>> " + playerVO);
+		
+		System.out.println(">>> playerAge的Type >>> " + playerVO.getPlayerAge().getClass().getName());
+		
+		return playerVO;
 	}
 
 }
