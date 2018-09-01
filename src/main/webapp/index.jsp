@@ -93,9 +93,9 @@
 			       });
 			  });
 			  
-			  // >>> ajax POST , 後端回在TestController中宣告的DeptVO <<<
+			  // >>> ajax POST , 後端透過@RequestBody直接將前端送過去的JSON字串，轉換成VO <<<
 			  $('#btn4').click(function(e){
-				  var toUrl = '<sp:url value="/TestController/testAjaxPostReturnDeptVO"/>';
+				  var toUrl = '<sp:url value="/TestController/testAjaxPostReceivePlayerVO"/>';
 			      var postData = { 'playerName' : 'Roger' , 'playerRole' : 'Magician' , 'playerAge' : '18' };								  
 			      $.ajax({ 
 			    	    url: toUrl ,

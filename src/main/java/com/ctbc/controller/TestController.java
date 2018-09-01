@@ -79,11 +79,14 @@ public class TestController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/testAjaxPostReceivePlaterVO", method = RequestMethod.POST, 
+	@RequestMapping(value = "/testAjaxPostReceivePlayerVO", method = RequestMethod.POST, 
 		consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE },  // consumes的例子（方法僅處理request Content-Type 為 "application/json" 類型的請求）
 		produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }   // produces: 指定返回的内容类型，僅當 request-header 中的(Accept)類型中包含該指定類型才返回；
 	)
 	private PlayerVO testAjaxPostReceivePlaterVO(@RequestBody PlayerVO playerVO) {
+		/**
+		 * 透過@RequestBody直接將前端送過去的JSON字串，轉換成VO
+		 */
 		System.out.println("=========== testAjaxPostReceivePlaterVO ===========");
 		System.out.println(">>> playerVO >>> " + playerVO);
 		
