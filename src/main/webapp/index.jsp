@@ -39,6 +39,8 @@
       		  <button type="button" id="btn3" class="btn btn-warning margin-around">Test Spring-MVC (ajax POST 回VO)</button> <br>
       		  
       		  <button type="button" id="btn4" class="btn btn-info margin-around">Test Spring-MVC (ajax POST 接收VO)</button> <br>
+      		  
+      		  <button type="button" id="btn5" class="btn btn-dark margin-around">Test Spring-MVC (查Emps)</button> <br>
       		
       		</div>
       		<div class="col-2"></div>
@@ -96,6 +98,25 @@
 			  // >>> ajax POST , 後端透過@RequestBody直接將前端送過去的JSON字串，轉換成VO <<<
 			  $('#btn4').click(function(e){
 				  var toUrl = '<sp:url value="/TestController/testAjaxPostReceivePlayerVO"/>';
+			      var postData = { 'playerName' : 'Roger' , 'playerRole' : 'Magician' , 'playerAge' : '18' };								  
+			      $.ajax({ 
+			    	    url: toUrl ,
+			    	    type:"POST", 
+			    	    contentType: "application/json; charset=utf-8",
+			    	    data: toJson( postData ), // Stringified Json Object
+			    	    async: true,     // Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+			    	    cache: false,     // This will force requested pages not to be cached by the browser          
+			    	    processData:false, // To avoid making query String instead of JSON
+			    	    success: function( cbData ){
+			    	    	console.log( ' cbData >>> ' , cbData );
+			    	        alert('SUCCESS!!!');
+			    	    }
+			       });
+			  });
+			  
+			  // >>> ajax POST , 後端透過@RequestBody直接將前端送過去的JSON字串，轉換成VO <<<
+			  $('#btn5').click(function(e){
+				  var toUrl = '<sp:url value="/EmpController/getAllEmps"/>';
 			      var postData = { 'playerName' : 'Roger' , 'playerRole' : 'Magician' , 'playerAge' : '18' };								  
 			      $.ajax({ 
 			    	    url: toUrl ,

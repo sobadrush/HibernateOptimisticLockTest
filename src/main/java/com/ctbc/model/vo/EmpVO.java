@@ -44,8 +44,8 @@ public class EmpVO implements Serializable {
 	@Column(name = "hiredate" , columnDefinition = "DATE")
 	private java.util.Date empHiredate;
 	
-	@JoinColumn(name = "deptno")
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "deptno")
 	private DeptVO deptVOGG;
 	
 	@Version

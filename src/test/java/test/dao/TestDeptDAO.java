@@ -26,8 +26,8 @@ import _00_Config.RootConfig;
 @ContextConfiguration(classes = { RootConfig.class })
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 @Transactional
-//@ActiveProfiles(profiles = { "sqlite" })
-@ActiveProfiles(profiles = { "mssql_itoa" })
+@ActiveProfiles(profiles = { "sqlite" })
+//@ActiveProfiles(profiles = { "mssql_itoa" })
 public class TestDeptDAO {
 
 	@Autowired

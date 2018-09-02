@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ctbc.model.dao.EmpDAO;
 import com.ctbc.model.vo.DeptVO;
 import com.ctbc.model.vo.EmpVO;
+import com.google.gson.Gson;
 
 import _00_Config.RootConfig;
 
@@ -24,8 +25,8 @@ import _00_Config.RootConfig;
 @ContextConfiguration(classes = { RootConfig.class })
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 @Transactional
-//@ActiveProfiles(profiles = { "sqlite" })
-@ActiveProfiles(profiles = { "mssql_itoa" })
+@ActiveProfiles(profiles = { "sqlite" })
+//@ActiveProfiles(profiles = { "mssql_itoa" })
 public class TestEmpDAO {
 
 	@Autowired
@@ -35,16 +36,29 @@ public class TestEmpDAO {
 //	@Ignore
 	@Rollback(true)
 	public void test001() throws SQLException {
+		System.out.println("============ test001() =============");
+		
 		List<EmpVO> empList = empDAO.getAll();
 		for (EmpVO empVO : empList) {
 			System.out.println(empVO);
 			
 			DeptVO deptVO = empVO.getDeptVOGG();
-			System.out.println(" >>> " + deptVO);
 			
+			deptVO.setEmps(null); // ※※※避免Gson.toJson發生StackOverFlowError
+			
+			System.out.println(">>> deptVO >>> " + deptVO);
 		}
+		
+		try {
+			Gson gson = new Gson();
+			String empListJson = gson.toJson(empList);
+			System.out.println(" empListJson >>> " + empListJson);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
-
+	
 }
 
 
