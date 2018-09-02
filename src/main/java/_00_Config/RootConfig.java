@@ -1,5 +1,6 @@
 package _00_Config;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -24,9 +26,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteConfig.Pragma;
 
+import com.ctbc.utils.MyUtils;
+
 @Configuration
 @ComponentScan(basePackages = "com.ctbc.model.dao.**")
 @EnableTransactionManagement
+@PropertySource(value = { "classpath:maven_pom.properties" }, encoding = "utf-8")
 public class RootConfig {
 
 	@Autowired
@@ -73,11 +78,6 @@ public class RootConfig {
 		};
 	}
 
-//	@Bean
-//    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-//        return new PropertySourcesPlaceholderConfigurer();
-//    }
-	
 	@Bean
 	@Profile("sqlite")
 	public DataSource driverManagerDs() {
@@ -91,18 +91,19 @@ public class RootConfig {
 		props.setProperty(Pragma.DATE_STRING_FORMAT.pragmaName, "yyyy-MM-dd");
 
 		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-		DriverManagerDataSource ds = new DriverManagerDataSource();
-		ds.setConnectionProperties(props);
-//		ds.setUrl("jdbc:sqlite:testDB.db");
-		ds.setUrl("jdbc:sqlite:E:\\CTBC_workspace_Oxygen_3a\\HibernateOptimisticLockTest\\testDB.db");
-//		ds.setUrl("jdbc:sqlite:" + System.getProperty("user.dir") + "/" + "testDB.db");
-
 		// java.endorsed.dirs ─ E:\CTBC_workspace_Oxygen_3a\apache-tomcat-9.0.7\endorsed
-//		String workspacePath = MyUtils.subStringBeforeLastNum(System.getProperty("java.endorsed.dirs"), "\\", 2);
-//		System.out.println(" >> 工作區 >> " + workspacePath);
+		String workspacePath = MyUtils.subStringBeforeLastNum(System.getProperty("java.endorsed.dirs"), "\\", 2);
+		String sqlitephysicalLoc =  workspacePath + "/" + springEnv.getProperty("pom.project.artifactId") + "/" + "testDB.db"; 
+		System.out.println("Sqlite DB實體位置：" + sqlitephysicalLoc );
 		
-		//System.out.println("Sqlite DB實體位置：" + "jdbc:sqlite:" + System.getProperty("user.dir") + "/" + "testDB.db");
-
+		if (new File(sqlitephysicalLoc).exists() == false /*當用main或junit啟動時必須如下指定路徑*/) {
+			sqlitephysicalLoc = "E:/CTBC_workspace_Oxygen_3a/HibernateOptimisticLockTest/testDB.db";
+		}
+		
+		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+		DriverManagerDataSource ds = new DriverManagerDataSource();
+		ds.setUrl("jdbc:sqlite:" + sqlitephysicalLoc);
+		ds.setConnectionProperties(props);
 		ds.setDriverClassName("org.sqlite.JDBC");
 		return ds;
 	}
