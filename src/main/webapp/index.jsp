@@ -34,9 +34,9 @@
 		      
 		      <button type="button" id="btn1" class="btn btn-danger margin-around">Test Spring-MVC (Form POST)</button> <br>
       		
-      		  <button type="button" id="btn2" class="btn btn-success margin-around">Test Spring-MVC (ajax POST 回String)</button> <br>
+      		  <button type="button" id="btn2" class="btn btn-success margin-around">Test Spring-MVC (ajax POST 回Json-String)</button> <br>
       		  
-      		  <button type="button" id="btn3" class="btn btn-warning margin-around">Test Spring-MVC (ajax POST 回VO)</button> <br>
+      		  <button type="button" id="btn3" class="btn btn-warning margin-around">Test Spring-MVC (ajax POST 回PlayerVO)</button> <br>
       		  
       		  <button type="button" id="btn4" class="btn btn-info margin-around">Test Spring-MVC (ajax POST 接收VO)</button> <br>
       		  
@@ -78,7 +78,7 @@
 			  
 			  // >>> ajax POST , 後端回在TestController中宣告的DeptVO <<<
 			  $('#btn3').click(function(e){
-				  var toUrl = '<sp:url value="/TestController/testAjaxPostReturnDeptVO"/>';
+				  var toUrl = '<sp:url value="/TestController/testAjaxPostReturnPlayerVO"/>';
 			      var postData = { 'empName' : 'Roger333' , 'empLevel333' : 'Manager333' , 'empAge333' : '26333' };								  
 			      $.ajax({ 
 			    	    url: toUrl ,

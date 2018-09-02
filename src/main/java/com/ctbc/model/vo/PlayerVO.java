@@ -14,6 +14,12 @@ public class PlayerVO implements Serializable {
 		super();
 	}
 
+	public PlayerVO(String playerName, String playerRole, Integer playerAge) {
+		this.playerName = playerName;
+		this.playerRole = playerRole;
+		this.playerAge = playerAge;
+	}
+
 	public String getPlayerName() {
 		return playerName;
 	}

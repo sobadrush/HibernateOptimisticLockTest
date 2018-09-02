@@ -51,22 +51,12 @@ public class TestController {
 		return "{ \"rtnMsg\" : \"幹你娘\" }";
 	}
 	
-	
-	class DeptVO {
-		int deptId;
-		String deptName;
-		public DeptVO(int deptId, String deptName) {
-			this.deptId = deptId;
-			this.deptName = deptName;
-		}
-	}
-	
 	@ResponseBody
-	@RequestMapping(value = "/testAjaxPostReturnDeptVO", method = RequestMethod.POST, 
+	@RequestMapping(value = "/testAjaxPostReturnPlayerVO", method = RequestMethod.POST, 
 		consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE },  // consumes的例子（方法僅處理request Content-Type 為 "application/json" 類型的請求）
 		produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }   // produces: 指定返回的内容类型，僅當 request-header 中的(Accept)類型中包含該指定類型才返回；
 	)
-	private DeptVO testAjaxPostReturnDeptVO(@RequestBody Map<String, Object> inputJson) {
+	private PlayerVO testAjaxPostReturnPlayerVO(@RequestBody Map<String, Object> inputJson) {
 		System.out.println("=========== testAjaxPostReturnDeptVO ===========");
 		System.out.println(">>> inputJson >>> " + inputJson);
 		
@@ -75,7 +65,7 @@ public class TestController {
 			System.out.println(" @@ " + entry.getKey() + " <===> " + entry.getValue());
 		}
 		
-		return new DeptVO(9487 , "數金部");
+		return new PlayerVO("哆啦A夢" , "機器貓" , 666);
 	}
 	
 	@ResponseBody

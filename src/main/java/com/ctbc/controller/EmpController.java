@@ -36,7 +36,7 @@ public class EmpController {
 			System.out.println(empVO);
 			
 			DeptVO deptVO = empVO.getDeptVOGG();
-			deptVO.setEmps(null); // ※※※避免Gson.toJson發生StackOverFlowError
+			deptVO.setEmps(null); // ※※※避免Gson.toJson發生StackOverFlowError(Gson輸出json時一方多方無限交互參照)
 			
 			System.out.println(">>> deptVO >>> " + deptVO);
 		}
